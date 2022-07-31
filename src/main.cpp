@@ -1,8 +1,8 @@
 ﻿#include "application.hpp"
 
-auto main() -> int
+auto main(int argc, char** argv) -> int
 {
-	Application a;
+	Application a(argc, argv);
 
 	return a.exec();
 }

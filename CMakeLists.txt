@@ -8,4 +8,8 @@ project ("fastboard-cpp")
 
 add_executable (fastboard-cpp 
 	"src/main.cpp"  
-	"src/application.cpp")
+	"src/application.cpp"
+	 "src/game.cpp")
+
+
+#Debugging purposes only
