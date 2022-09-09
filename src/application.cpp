@@ -1,61 +1,54 @@
 #include "application.hpp"
 #include <iostream>
 Application::Application(int argc, char** argv)
-	: argc(argc), argv(argv)
+	: argc(argc), argv(argv), m_ui(std::cout)
 {
 }
 
-int Application::exec()
+auto Application::exec() -> int
 {
-	try
-	{
-		parseFile();
-	}
-	catch (const appexception& exc)
-	{
-		std::cerr << exc.what();
-	}
-	catch (...)
-	{
-		return EXIT_FAILURE;
-	}
-	
+	Game x(m_ui, "AAA\n\
+BBb");
 
+	x.play();
 
 
 	return 0;
 }
 
-bool Application::parseFile()
+//auto Application::parseFile() -> bool
+//{
+//	//probably gonna change
+//
+//	/*if (argc > 2) throw appexception("Too many application arguments");
+//
+//	m_filePath = argv[1];
+//
+//	std::ifstream file;
+//	file.open(m_filePath);
+//
+//	if (!file) throw appexception("File can't be opened");
+//
+//	std::string text;
+//
+//	for (std::string line; std::getline(file, line);)
+//	{
+//		if (!line.empty()) text += line;
+//		else
+//		{
+//			m_textsVec.push_back(text);
+//			text.erase();
+//		}
+//	}
+//
+//	if(!text.empty()) m_textsVec.push_back(text);
+//
+//	file.close*/
+//
+//	return true;
+//}
+
+auto Application::appAbort(const std::string_view& _str) const noexcept -> void
 {
-	if (argc > 2) throw appexception("Too many application arguments");
-
-	m_filePath = argv[1];
-
-	std::ifstream file;
-	file.open(m_filePath);
-
-	if (!file) throw appexception("File can't be opened");
-
-	std::string text;
-
-	for (std::string line; std::getline(file, line);)
-	{
-		if (!line.empty()) text += line;
-		else
-		{
-			m_textsVec.push_back(text);
-			text.erase();
-		}
-	}
-
-	if(!text.empty()) m_textsVec.push_back(text);
-
-	file.close();
-
-	return true;
-}
-
-void Application::appAbort(std::string_view) const noexcept
-{
+	std::exit(EXIT_FAILURE);
 }

@@ -9,7 +9,9 @@ project ("fastboard-cpp")
 add_executable (fastboard-cpp 
 	"src/main.cpp"  
 	"src/application.cpp"
-	 "src/game.cpp")
+	"src/game.cpp"
+	"src/win/ui.cpp"
+	"src/options.cpp")
 
+# CMake windows/unix selection need to be added
 
-#Debugging purposes only

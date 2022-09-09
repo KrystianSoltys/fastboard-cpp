@@ -1,6 +1,8 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
+
+#include "game.hpp"
 #include "appexception.hpp"
 #include <string>
 #include <fstream>
@@ -14,17 +16,18 @@ public:
 
 	int exec();
 
-	
 
 private:
 	int argc;
 	char** argv;
 
+    UI m_ui;
+	Options m_options {};
 	std::string m_filePath{};
 	std::vector<std::string> m_textsVec;
 
-	bool parseFile();
-	void appAbort(std::string_view) const noexcept;
+	//bool parseFile();
+	void appAbort(const std::string_view&) const noexcept;
 };
 
 
