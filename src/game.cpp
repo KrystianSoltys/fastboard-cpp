@@ -7,57 +7,66 @@ Game::Game(UI& _ui, const std::string& _txt)
 
 
 auto Game::play() -> void
-{
+{   
+    using Just = UI::Justification;
+
+    std::vector<std::string> linesVec;
     std::stringstream ss(m_txt);
 
-    std::vector<s_Results> lineResultsVec;
-    std::vector<char> userInput;
-        
-    for(std::string orgTxt, userInput; std::getline(ss, orgTxt);)
+    for (std::string orgTxt; std::getline(ss, orgTxt);)
     {
-        userInput.erase();
-        //debug purposes begin
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-        ui << orgTxt.c_str() << "\n";
+        linesVec.push_back(orgTxt);
+    }
+
+
+    std::vector<char> userInputVec;
+    std::vector<s_Results> lineResultsVec;
+
+    for(const auto& orgStr: linesVec)
+    {
+        userInputVec.clear();
+
+        ui << UI::Colors::White << UI::Setw{Just::Center, orgStr.size()} << orgStr.c_str() << "\n";
        
-        //debug purposes end
-        for (size_t i = 0; i < orgTxt.length();)
+        ui << UI::Setw{ Just::Center, orgStr.size() };
+        
+        for (std::size_t i = 0; i < orgStr.length();)
         {
-            char x = _getch();
-            if (x == 8)
+            char ch = _getch();
+            if (ch == 8)
             {
-                if (userInput.length() > 0)
+                if (userInputVec.size() > 0)
                 {
-                    --i;
                     if (i > 0) --i;
-                    std::cout << "\b \b";
-                    userInput.pop_back();
+                    ui << "\b \b";
+                    userInputVec.pop_back();
                 }
             }
 
             else
             {
-                if (x == orgTxt[i])
+                if (ch == orgStr[i])
                 {
-                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
-                    userInput.push_back(x);
+                    ui << UI::Colors::Green;
+                    userInputVec.push_back(ch);
                 }
 
                 else
                 {
-                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
-                    userInput.push_back(x);
+                    ui << UI::Colors::Red;
+                    userInputVec.push_back(ch);
                 }
-                std::cout << x;
+                ui << ch;
 
                 i++;
             }
             
         }
 
-        std::cout << "\n";
+        ui << "\n";
 
-        lineResultsVec.push_back(check_line(orgTxt, userInput));
+        lineResultsVec.push_back(
+            check_line(orgStr, std::string(userInputVec.begin(), userInputVec.end())));
     }
 
 
@@ -72,10 +81,10 @@ auto Game::play() -> void
     m_results.rate = static_cast<double> (m_results.ct_correct) 
         / (static_cast<double> (m_results.ct_correct) + static_cast<double> (m_results.ct_incorrect));
 
-    std::cout << "\n\nRate: " << m_results.rate*100.0 << "\nCorrect: " << m_results.ct_correct <<
-        "\nIncorrect: " << m_results.ct_incorrect << std::endl;
 
-    system("pause");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+    ui << "\n\nRate: " << m_results.rate * 100.0 << "\nCorrect: " << m_results.ct_correct <<
+        "\nIncorrect: " << m_results.ct_incorrect << "\n";
 }
 
 
@@ -83,9 +92,9 @@ auto Game::check_line(const std::string_view& orgStr, const std::string_view& us
 {
     std::size_t len = (orgStr.length() < userStr.length()) ? orgStr.length() : userStr.length();
 
-    long correct = 0;
+    std::size_t correct = 0;
 
-    for (size_t i = 0; i < len; i++)
+    for (std::size_t i = 0; i < len; i++)
     {
         try
         {
@@ -93,7 +102,7 @@ auto Game::check_line(const std::string_view& orgStr, const std::string_view& us
         }
         catch (const std::out_of_range&)
         {
-            return s_Results{ -1.0,-1,-1 };
+            return s_Results{ -1.0, 0, 0 };
         }
         catch (...)
         {
@@ -101,8 +110,8 @@ auto Game::check_line(const std::string_view& orgStr, const std::string_view& us
         }
     }
 
-    long incorrect = orgStr.length() - correct;
+    std::size_t incorrect = orgStr.length() - correct;
     double rt = static_cast<double>(correct / (correct+incorrect));
 
-    return s_Results{ rt, correct, incorrect};
+    return s_Results {rt, correct, incorrect};
 }

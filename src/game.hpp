@@ -24,8 +24,8 @@ public:
 	struct s_Results
 	{
 		double rate;
-		long ct_correct;
-		long ct_incorrect;
+		std::size_t ct_correct;
+		std::size_t ct_incorrect;
 	};
 
     auto play() -> void;
