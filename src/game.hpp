@@ -14,6 +14,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <array>
 
 class Game
 {
@@ -21,6 +22,7 @@ public:
 
 	explicit Game(UI&, const std::string&);
 
+	enum class ModulesEnum { sw_PlayGame = 1, sw_Options, sw_Statistics, sw_Exit };
 	struct s_Results
 	{
 		double rate;
@@ -29,6 +31,7 @@ public:
 	};
 
     auto play() -> void;
+	auto main_menu() -> ModulesEnum;
 	auto check_line(const std::string_view&, const std::string_view&) -> s_Results;
 
 private:

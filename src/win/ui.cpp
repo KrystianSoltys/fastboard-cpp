@@ -6,15 +6,34 @@ UI::UI(std::ostream& _os) : os(_os)
 }
 
 
-auto UI::MainMenuUI() -> AppModulesEnum
-{
-	return AppModulesEnum::sw_PlayGame;
-}
-
-
 auto UI::OptionsUI(const Options& _opt) -> Options
 {
     return Options();
+}
+
+auto UI::cls() const noexcept -> void
+{
+    system("cls");
+}
+
+auto UI::print_logo() noexcept -> void
+{
+   *this << UI::Setw {Justification::Center, 97} <<
+"   __                 _     _                                  _                                \n"
+<< UI::Setw{ Justification::Center, 97 } <<
+"  / _|               | |   | |                                | |                                \n"
+<< UI::Setw{ Justification::Center, 97 } <<
+" | |_    __ _   ___  | |_  | |__     ___     __ _   _ __    __| |  ______    ___   _ __    _ __  \n"
+<< UI::Setw{ Justification::Center, 97 } <<
+" |  _|  / _` | / __| | __| | '_ \\   / _ \\   / _` | | '__|  / _` | |______|  / __| | '_ \\  | '_ \\ \n"
+<< UI::Setw{ Justification::Center, 97 } <<
+" | |   | (_| | \\__ \\ | |_  | |_) | | (_) | | (_| | | |    | (_| |          | (__  | |_) | | |_) | \n"
+<< UI::Setw{ Justification::Center, 97 } <<
+" |_|    \\__,_| |___/  \\__| |_.__/   \\___/   \\__,_| |_|     \\__,_|           \\___| | .__/  | .__/ \n"
+<< UI::Setw{ Justification::Center, 97 } <<
+"                                                                                  | |     | |    \n"
+<< UI::Setw{ Justification::Center, 97 } <<
+"                                                                                  |_|     |_|    \n";
 }
 
 
@@ -40,4 +59,6 @@ auto UI::operator<< (const Setw& setw) -> UI&
     default:
         break;
     }
+
+    return *this;
 }

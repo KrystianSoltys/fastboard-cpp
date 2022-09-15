@@ -81,11 +81,45 @@ auto Game::play() -> void
     m_results.rate = static_cast<double> (m_results.ct_correct) 
         / (static_cast<double> (m_results.ct_correct) + static_cast<double> (m_results.ct_incorrect));
 
+    ui << "\n\n";
+    ui << UI::Setw{ Just::Center, 13 }
+       << UI::Colors::Lightblue << "Rate: " << std::setprecision(4) << m_results.rate * 100.0 << "%\n"
+       << UI::Setw {Just::Center, 13 }
+       << UI::Colors::Green << "Correct: " << m_results.ct_correct << "\n"
+       << UI::Setw{ Just::Center, 13 }
+       << UI::Colors::Red << "Incorrect: " << m_results.ct_incorrect << "\n";
 
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-    ui << "\n\nRate: " << m_results.rate * 100.0 << "\nCorrect: " << m_results.ct_correct <<
-        "\nIncorrect: " << m_results.ct_incorrect << "\n";
+       _getch();
 }
+
+
+auto Game::main_menu() -> ModulesEnum
+{
+    using Just = UI::Justification;
+
+
+    while (true)
+    {
+        ui.cls();
+        ui << UI::Colors::White;
+        ui.print_logo();
+        ui << "\n\n";
+        ui << UI::Setw{ Just::Center, std::string("(1) Play").length() } << "(1) Play\n\n";
+        ui << UI::Setw{ Just::Center, std::string("(2) Options").length() } << "(2) Options\n\n";
+        ui << UI::Setw{ Just::Center, std::string("(3) Statistics").length() } << "(3) Statistics\n\n";
+        ui << UI::Setw{ Just::Center, std::string("(4) Exit").length() } << "(4) Exit\n\n";
+
+        int x = _getch();
+        ui.cls();
+        if (x >= 49 && x <= 52) return static_cast<ModulesEnum> (x - 48);
+    }
+
+    
+
+    
+}
+
+
 
 
 auto Game::check_line(const std::string_view& orgStr, const std::string_view& userStr) -> s_Results

@@ -12,18 +12,17 @@ class UI
 public:
     explicit UI(std::ostream&);
 
-    enum class AppModulesEnum { sw_PlayGame, sw_Options, sw_Statistics, sw_Exit };
     enum class Justification { Right, Center, Left };
     enum class Colors { Blue = 1, Green, Lightblue, Red, Purple, Yellow, White, Grey};
 
-    auto MainMenuUI() -> AppModulesEnum;
     auto OptionsUI(const Options&) -> Options;
+    auto cls() const noexcept -> void;
+    auto print_logo() noexcept -> void;
 
-    auto operator<< (Colors) -> UI&;    //text color
+    auto operator<< (Colors) -> UI&;        //text color
 
     struct Setw { UI::Justification just; std::size_t size; };
-
-    auto operator<< (const Setw&) -> UI&;      //text justification
+    auto operator<< (const Setw&) -> UI&;   //text justification
 
     template <typename T>
     UI& operator<< (const T& x)

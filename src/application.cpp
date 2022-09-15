@@ -10,10 +10,26 @@ auto Application::exec() -> int
 	Game x(m_ui, "Ala ma kota\n\
 a kot ma Alee");
 
-	x.play();
+	while (true)
+	{
+		switch (x.main_menu())
+		{
+		case Game::ModulesEnum::sw_PlayGame:
+			x.play();
+			break;
+		case Game::ModulesEnum::sw_Options:
+			break;
+		case Game::ModulesEnum::sw_Statistics:
+			break;
+		case Game::ModulesEnum::sw_Exit:
+			return EXIT_SUCCESS;
 
+		default:
+			break;
+		}
+	}
 
-	return 0;
+	return EXIT_FAILURE;
 }
 
 
