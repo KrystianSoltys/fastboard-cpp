@@ -1,5 +1,5 @@
 #include "application.hpp"
-#include <iostream>
+
 Application::Application(int argc, char** argv)
 	: argc(argc), argv(argv), m_ui(std::cout)
 {
@@ -7,15 +7,15 @@ Application::Application(int argc, char** argv)
 
 auto Application::exec() -> int
 {
-	Game x(m_ui, "Ala ma kota\n\
-a kot ma Alee");
+	std::size_t ct = 0;
+	Game x(m_ui);
 
 	while (true)
 	{
 		switch (x.main_menu())
 		{
 		case Game::ModulesEnum::sw_PlayGame:
-			x.play();
+			x.play(Data::texts.at(ct % Data::texts.size()));
 			break;
 		case Game::ModulesEnum::sw_Options:
 			break;
@@ -27,6 +27,8 @@ a kot ma Alee");
 		default:
 			break;
 		}
+
+		++ct;
 	}
 
 	return EXIT_FAILURE;

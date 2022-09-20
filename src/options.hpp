@@ -4,7 +4,7 @@
 class Options
 {
 public:
-	Options();
+	explicit Options();
 
 private:
 

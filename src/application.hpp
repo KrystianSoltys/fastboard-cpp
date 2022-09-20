@@ -4,6 +4,7 @@
 
 #include "game.hpp"
 #include "appexception.hpp"
+#include "data.hpp"
 #include <string>
 #include <fstream>
 #include <vector>

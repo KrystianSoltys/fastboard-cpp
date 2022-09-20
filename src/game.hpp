@@ -20,7 +20,7 @@ class Game
 {
 public:
 
-	explicit Game(UI&, const std::string&);
+	explicit Game(UI&);
 
 	enum class ModulesEnum { sw_PlayGame = 1, sw_Options, sw_Statistics, sw_Exit };
 	struct s_Results
@@ -28,9 +28,10 @@ public:
 		double rate;
 		std::size_t ct_correct;
 		std::size_t ct_incorrect;
+		std::size_t ct_backspaces;
 	};
 
-    auto play() -> void;
+    auto play(const std::string&) -> void;
 	auto main_menu() -> ModulesEnum;
 	auto check_line(const std::string_view&, const std::string_view&) -> s_Results;
 
