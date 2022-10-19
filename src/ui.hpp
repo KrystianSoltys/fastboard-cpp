@@ -1,11 +1,20 @@
 #ifndef UI_HPP
 #define UI_HPP
 
-#include "../options.hpp"
-#include <Windows.h>
+#include "options.hpp"
 #include <iostream>
 #include <iomanip>
+
+#ifdef _WIN32
+#include <Windows.h>
 #include <conio.h>  // :/
+
+#elif UNIX
+#include <>
+
+#endif // _WIN32 / UNIX
+
+
 
 class UI
 {
@@ -18,6 +27,7 @@ public:
     auto OptionsUI(const Options&) -> Options;
     auto cls() const noexcept -> void;
     auto print_logo() noexcept -> void;
+    auto getchar() noexcept -> int;
 
     auto operator<< (Colors) -> UI&;        //text color
 
@@ -33,7 +43,7 @@ public:
 
 private:
     std::ostream& os;
-    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    
 };
 
 #endif // !UI_HPP

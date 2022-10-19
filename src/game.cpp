@@ -36,7 +36,7 @@ auto Game::play(const std::string& str) -> void
         
         for (std::size_t i = 0; i < orgStr.length();)
         {
-            char ch = _getch();
+            char ch = ui.getchar();
             if (ch == 3) return; //ctrl + c 
             if (ch == 13) continue; //enter
             if (ch == 8)

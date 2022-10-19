@@ -1,8 +1,7 @@
-#include "ui.hpp"
+#include "../ui.hpp"
 
 UI::UI(std::ostream& _os) : os(_os)
 {
-    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &consoleInfo);
 }
 
 
@@ -36,6 +35,11 @@ auto UI::print_logo() noexcept -> void
 "                                                                                  |_|     |_|    \n";
 }
 
+auto UI::getchar() noexcept -> int
+{
+    return _getch();
+}
+
 
 auto UI::operator<<(Colors col) -> UI&
 {
@@ -45,6 +49,8 @@ auto UI::operator<<(Colors col) -> UI&
 
 auto UI::operator<< (const Setw& setw) -> UI&
 {
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &consoleInfo);
     auto cols = static_cast<int>(consoleInfo.srWindow.Right - consoleInfo.srWindow.Left + 1);
 
     switch (setw.just)

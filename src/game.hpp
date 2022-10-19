@@ -2,13 +2,7 @@
 #define GAME_HPP
 
 
-#ifdef _WIN32
-#include "win/ui.hpp"
-
-#elif _UNIX
-#include "unix/ui.hpp"
-
-#endif //_WIN32
+#include "ui.hpp"
 
 
 #include <string>
