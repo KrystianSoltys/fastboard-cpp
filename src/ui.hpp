@@ -7,7 +7,7 @@
 
 #ifdef _WIN32
 #include <Windows.h>
-#include <conio.h>  // :/
+#include <conio.h>
 
 #elif UNIX
 #include <>
@@ -28,6 +28,7 @@ public:
     auto cls() const noexcept -> void;
     auto print_logo() noexcept -> void;
     auto getchar() noexcept -> int;
+    auto setStatusBar(std::uint16_t x, std::uint16_t max) -> void;
 
     auto operator<< (Colors) -> UI&;        //text color
 
@@ -43,7 +44,6 @@ public:
 
 private:
     std::ostream& os;
-    
 };
 
 #endif // !UI_HPP

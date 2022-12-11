@@ -40,6 +40,24 @@ auto UI::getchar() noexcept -> int
     return _getch();
 }
 
+auto UI::setStatusBar(std::uint16_t x, std::uint16_t max) -> void
+{
+    double progress = static_cast<double>(x) / static_cast<double>(max);
+
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(console, &csbi);
+    COORD pos = {csbi.srWindow.Left, csbi.srWindow.Bottom};
+    COORD current = csbi.dwCursorPosition;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+
+    int len = progress * static_cast<double>(csbi.srWindow.Right);
+    *this << UI::Colors::Yellow;
+    for(int i=0; i<len; i++) *this << (char)219;
+
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), current);
+}
+
 
 auto UI::operator<<(Colors col) -> UI&
 {

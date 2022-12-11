@@ -12,8 +12,8 @@ auto Game::play(const std::string& str) -> void
 
     using Just = UI::Justification;
 
-    std::vector<std::string> linesVec;
-    std::stringstream ss(m_txt);
+    std::vector<std::string> linesVec;  //vector with original text lines
+    std::stringstream ss(m_txt);        //string stream to divide lines
 
     for (std::string orgTxt; std::getline(ss, orgTxt);)
     {
@@ -21,9 +21,9 @@ auto Game::play(const std::string& str) -> void
     }
 
 
-    std::vector<char> userInputVec;
-    std::vector<s_Results> lineResultsVec;
-    std::size_t ct_bcksp;
+    std::vector<char> userInputVec;         //vector of users char for one line
+    std::vector<s_Results> lineResultsVec;  //vector of stats
+    std::size_t ct_bcksp, iter=1;
 
     for(const auto& orgStr: linesVec)
     {
@@ -37,9 +37,9 @@ auto Game::play(const std::string& str) -> void
         for (std::size_t i = 0; i < orgStr.length();)
         {
             char ch = ui.getchar();
-            if (ch == 3) return; //ctrl + c 
+            if (ch == 3) return;    //ctrl + c 
             if (ch == 13) continue; //enter
-            if (ch == 8)
+            if (ch == 8)            //backspace
             {
                 if (userInputVec.size() > 0)
                 {
@@ -65,6 +65,7 @@ auto Game::play(const std::string& str) -> void
                 {
                     ui << UI::Colors::Red;
                     userInputVec.push_back(ch);
+                    if (ch == ' ') ch = '_'; //space
                 }
                 ui << ch;
 
@@ -75,9 +76,12 @@ auto Game::play(const std::string& str) -> void
 
         ui << "\n";
 
+        ui.setStatusBar(iter, linesVec.size());
+
         lineResultsVec.push_back(
             check_line(orgStr, std::string(userInputVec.begin(), userInputVec.end())));
-        (*lineResultsVec.rbegin()).ct_backspaces = ct_bcksp;
+        (*lineResultsVec.rbegin()).ct_backspaces = ct_bcksp;    //add backspace stats to last elem 
+        ++iter; //loop iterator
     }
 
 
@@ -129,7 +133,7 @@ auto Game::main_menu() -> ModulesEnum
 
         int x = _getch();
         ui.cls();
-        if (x >= 49 && x <= 52) return static_cast<ModulesEnum> (x - 48);
+        if (x >= 49 && x <= 52) return static_cast<ModulesEnum> (x - 48); //
     }
 
     
