@@ -1,5 +1,5 @@
 # fastboard-cpp
-###Learn to write on your keyboard way faster!
+### Learn to write on your keyboard way faster!
 
 My 4th application, made for CMake, C++ and Console learning purposes.</br>
 
