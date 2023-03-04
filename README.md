@@ -17,6 +17,11 @@ Application works on Windows (later also on Linux), can be compiled using both G
   <li> Dynamic adaptation to console width and height </li>
 </ul>
 
+### Main Menu
 ![Image of Main menu](https://github.com/KrystianSoltys/fastboard-cpp/blob/main/img/fastboard-mainmenu.png)
+
+### Writing
 ![Image of Writing process](https://github.com/KrystianSoltys/fastboard-cpp/blob/main/img/fastboard-writing.png)
+
+### Results
 ![Image of Results](https://github.com/KrystianSoltys/fastboard-cpp/blob/main/img/fastboard-results.png)
