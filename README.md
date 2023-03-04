@@ -6,7 +6,7 @@ My 4th application, made for CMake, C++ and Console learning purposes.</br>
 <b>Every from of feedback will be really appreciated</b></br></br>
 Contact me if you want to help my progressing in programming :d  xks777x@gmail.com</br>
 
-Application works on Windows (later also on Linux), can be compiled using both GCC(MinGW) and MSVC compilers.
+Application works on Windows (later also on Linux), can be compiled using MSVC compiler.
 
 ### Features
 <ul>
